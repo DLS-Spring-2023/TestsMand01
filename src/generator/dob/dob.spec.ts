@@ -8,7 +8,7 @@ describe('generate random date of birth', () => {
         const generatedDob = generateDob()
 
         expect(generatedDob).toBeInstanceOf(Date)
-        expect(generatedDob.getTime()).toBeGreaterThanOrEqual(maxAgeDate.getTime()); // + cast the date to a numeric representation
+        expect(generatedDob.getTime()).toBeGreaterThanOrEqual(maxAgeDate.getTime());
     });
 
     it('should generate random dob that is in the past', () => {
