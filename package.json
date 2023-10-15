@@ -8,7 +8,7 @@
     "dev": "tsc-watch --noClear -p tsconfig.json --onSuccess \"node -r dotenv/config --experimental-specifier-resolution=node ./dist/app.js\"",
     "build": "tsc",
     "start": "node --experimental-specifier-resolution=node dist/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "db:start": "./db.sh",
     "db:stop": "./db.sh stop",
     "db:seed": "node -r dotenv/config ./dist/db/init.js"
@@ -16,9 +16,15 @@
   "author": "JazzyMcJazz",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^29.5.5",
     "@types/node": "^20.8.6",
     "dotenv": "^16.0.3",
+    "ts-jest": "^29.1.1",
     "tsc-watch": "^5.0.3",
     "typescript": "^5.2.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   }
 }

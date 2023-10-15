@@ -1,4 +1,4 @@
-import { generateCpr } from "./generator";
+import { generateCpr, generateDob } from "./generator";
 
 console.log(generateCpr());
-console.log("hey7")
+console.log(generateDob());

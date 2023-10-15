@@ -8,5 +8,6 @@
     "rootDir": "./src",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-  }
+  },
+  "exclude": ["**/*.spec.ts"]
 }
