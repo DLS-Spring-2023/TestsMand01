@@ -2,18 +2,23 @@
   "name": "nodejs-ts-template",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/app.js",
   "type": "module",
   "scripts": {
-    "dev": "tsc-watch --noClear -p tsconfig.json --onSuccess \"node -r dotenv/config ./dist/index.js\"",
+    "dev": "tsc-watch --noClear -p tsconfig.json --onSuccess \"node -r dotenv/config ./dist/app.js\"",
     "build": "tsc",
-    "start": "node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:start": "./db.sh",
+    "db:stop": "./db.sh stop",
+    "db:seed": "node -r dotenv/config ./dist/db/init.js"
   },
   "author": "JazzyMcJazz",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^20.8.6",
     "dotenv": "^16.0.3",
-    "tsc-watch": "^5.0.3"
+    "tsc-watch": "^5.0.3",
+    "typescript": "^5.2.2"
   }
 }
