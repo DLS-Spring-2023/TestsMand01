@@ -6,4 +6,4 @@ fi
 docker run -d --rm \
 --name generator_db \
 -p 6000:8000 \
-surrealdb/surrealdb:latest start --user root --pass root
+surrealdb/surrealdb:latest start

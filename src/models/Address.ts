@@ -1,6 +1,6 @@
 export type Address = {
     street: string,
-    number: number,
+    number: string,
     floor: string,
     door: string,
     zip: number,
