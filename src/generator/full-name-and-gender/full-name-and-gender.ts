@@ -4,10 +4,6 @@ import { FullNameAndGender, } from "../../models";
 import { Gender } from "../../enums/Gender"
 
 export const generateFullNameAndGender =(): FullNameAndGender => {
-  persons.forEach(person => {
-    return console.log(person)
-  })
-  
   const mindIndex = 0;
   const maxIndex = persons.length - 1;
   const randomIndex = Math.floor(Math.random() * (maxIndex - mindIndex + 1)) + mindIndex;
