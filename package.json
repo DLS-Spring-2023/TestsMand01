@@ -9,8 +9,8 @@
     "build": "tsc",
     "start": "node --experimental-specifier-resolution=node dist/app.js",
     "test": "jest --setupFiles dotenv/config",
-    "db:start": "./scripts/db.sh",
-    "db:stop": "./scripts/db.sh stop",
+    "db:start": "docker run -d --rm --name generator_db -p 6000:8000 surrealdb/surrealdb:latest start",
+    "db:stop": "docker stop generator_db",
     "db:seed": "node -r dotenv/config ./scripts/seed-db.js"
   },
   "author": "JazzyMcJazz",
