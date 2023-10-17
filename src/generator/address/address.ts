@@ -1,21 +1,30 @@
 import { Address } from "../../models";
 import Repo from "../../repo/Repo";
 
-export async function generateAddress(): Promise<Address> {
-    const street = await Repo.getRandomFromStreetName();
+generateAddress(5).then(console.log);
+
+export async function generateAddress(n: number = 1): Promise<Address[]> {
+    if (n < 1) n = 1;
+    
+    const street = await Repo.getRandomFromStreetName(n);
     const number = generateStreetNumber();
     const floor = generateFloor();
     const door = generateDoor();
-    const { zip, city } = await Repo.getRandomFromPostalCode();
+    const postalCodes = await Repo.getRandomFromPostalCode(n);
     
-    return {
-        street,
-        number,
-        floor,
-        door,
-        zip,
-        city,
+    let addresses: Address[] = [];
+    for (let i = 0; i < n; i++) {
+        addresses.push({
+            street: street[i],
+            number,
+            floor,
+            door,
+            zip: postalCodes[i].zip,
+            city: postalCodes[i].city,
+        });
     }
+
+    return addresses;
 }
 
 function generateStreetNumber(): string {
