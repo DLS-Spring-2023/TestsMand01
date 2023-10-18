@@ -2,15 +2,14 @@ import { Address } from "../../models";
 import Repo from "../../repo/Repo";
 import { generateAddress } from "./address";
 
-const addresses: Address[] = [];
+let addresses: Address[];
 
 describe('generate random address', () => {
 
     beforeAll(async () => {
-        // Generate 100 addresses
-        for (let i = 0; i < 100; i++) {
-            addresses.push(await generateAddress());
-        }
+        // Generate 5000 addresses (takes about 15-20 seconds.)
+        // In production the limit should probably be 100 or so.
+        addresses = await generateAddress(5000);
     }, 60000);
 
     it(`should generate a random street name from the database`, async () => {
