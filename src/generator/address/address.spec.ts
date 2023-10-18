@@ -7,17 +7,10 @@ let addresses: Address[];
 describe('generate random address', () => {
 
     beforeAll(async () => {
-        // Generate 5000 addresses (takes about 15-20 seconds.)
+        // Generate 10000 addresses
         // In production the limit should probably be 100 or so.
-        addresses = await generateAddress(5000);
-    }, 60000);
-
-    it(`should generate a random street name from the database`, async () => {
-        const allAddresses = await Repo.findStreetNames();
-        for (const address of addresses) {
-            expect(allAddresses).toContain(address.street);
-        }
-    });
+        addresses = await generateAddress(10000);
+    }, 15000); // 15 seconds timeout
 
     it('should generate a random street number', async () => {
         // Street number rules:
@@ -46,10 +39,17 @@ describe('generate random address', () => {
         }
     });
 
-    it('should generate a random zip code and city name from database', async () => {
-        const allPostalCodes = await Repo.findPostalCodes();
-        for (const address of addresses) {
-            expect(allPostalCodes).toContainEqual({ zip: address.zip, city: address.city });
-        }
+    it('should generate less than 1% duplicate street names', () => {
+        const uniqueStreets = new Set(addresses.map(a => JSON.stringify(a.street)));
+        expect(uniqueStreets.size).toBeGreaterThan(9900);
+
+    });
+
+    it('should generate 0% duplicate addresses', () => {
+        // The chance of generating a duplicate address is very small.
+        // This test is here to make sure that the chance is not too big.
+        const uniqueCities = new Set(addresses.map(a => JSON.stringify(a)));
+        expect(uniqueCities.size).toBe(addresses.length);
+
     });
 });

@@ -1,5 +1,7 @@
 import { Surreal } from "surrealdb.node";
 
+type PostalCode = { code: number, city: string, id?: string };
+type AddressData = { name: string, postal_codes: PostalCode[] };
 class Repo {
     private db = new Surreal();
     public initialized = false;
@@ -14,33 +16,7 @@ class Repo {
         this.initialized = true;
     }
 
-    public async getRandomFromPostalCode(n: number): Promise<{ zip: number, city: string }[]> {
-        if (n < 1) n = 1;
-       
-        // Wait for the database to be initialized
-        while (!this.initialized) {
-            await new Promise(resolve => setTimeout(resolve, 100));
-        }
-
-        const query = "SELECT * FROM postal_code ORDER BY RAND() LIMIT 1;"
-
-        // Get a random postal code and city name from the database
-        const result = await this.db.query("SELECT * FROM postal_code") as { zip: string, city: string }[];
-        const mappedResult = result.flat().map(r => ({ zip: parseInt(r.zip), city: r.city}));
-
-        let postalCodes: { zip: number, city: string }[] = [];
-        for (let i = 0; i < n; i++) {
-            postalCodes.push(mappedResult[Math.floor(Math.random() * mappedResult.length)]);
-        }
-
-        // If no result, return a default value
-        if (postalCodes.length < 1) return [{ zip: 1301, city: "København K" }];
-
-        // Return the result
-        return postalCodes;
-    }
-
-    public async getRandomFromStreetName(n: number): Promise<string[]> {
+    public async getRandomAddressData(n: number): Promise<AddressData[]> {
         if (n < 1) n = 1;
         
         // Wait for the database to be initialized
@@ -49,35 +25,31 @@ class Repo {
         }
 
         // Get a random street name from the database
-        const result = await this.db.query("SELECT * FROM street_name ORDER BY RAND()") as { name: string }[];
-        const mappedResult = result.flat().map(r => r.name);
+        type PostalCode = { name: string, code: number };
+        const result = await this.db.query(
+            `SELECT *, postal_codes.*.* FROM street_name ORDER BY RAND() LIMIT ${n}`
+        ) as AddressData[];
 
-        let streetNames: string[] = [];
-        for (let i = 0; i < n; i++) {
-            streetNames.push(mappedResult[Math.floor(Math.random() * mappedResult.length)]);
+        while (result.length < n) {
+            const dup = result[Math.floor(Math.random() * result.length)]
+            result.push(dup);
         }
-         
         
-        // If no result, return a default value
-        if (streetNames.length < 1) return ["Østergade"];
-
-        // Return the result
-        return streetNames;
+        return result;
     }
 
-    public async findPostalCodes(): Promise<{ zip: number, city: string }[]> {
+    public async findPostalCodes(): Promise<PostalCode[]> {
         while (!this.initialized) {
             await new Promise(resolve => setTimeout(resolve, 100));
         }
-        const result = await this.db.query("SELECT * FROM postal_code") as { zip: string, city: string }[];
-        return result.map(r => ({ zip: parseInt(r.zip), city: r.city }));
+        return await this.db.query("SELECT * FROM postal_code") as PostalCode[];
     }
 
     public async findStreetNames(): Promise<string[]> {
         while (!this.initialized) {
             await new Promise(resolve => setTimeout(resolve, 100));
         }
-        const result = await this.db.query("SELECT * FROM street_name") as { name: string }[];
+        const result = await this.db.query("SELECT * FROM street_name") as AddressData[];
         return result.map(r => r.name);
     }
 }

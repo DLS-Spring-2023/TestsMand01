@@ -8,15 +8,11 @@ async function main() {
     try{
         await db.connect(process.env.DB_URL);
         await db.use({ ns: "generator", db: "generator" });
-    
-        const sql = fs.readFileSync('./src/data/addresses.sql');
-        const streetNames = fs.readFileSync('./src/data/street-names.txt');
-
-        const postalQuery = preparePostalCodes(sql);
-        const streetNameQuery = prepareStreetNames(streetNames);
-
-        console.log("Creating UNIQUE INDEX on TABLE `postal_code` for COLUMN `code`...");
-        await db.query('DEFINE INDEX postalCodeIndex ON TABLE postal_code COLUMNS code UNIQUE');
+        
+        const streetNames = JSON.parse(fs.readFileSync('./src/data/street-names.json'));
+        
+        const { postalQuery, streetQuery } = prepareStreetNames(streetNames);
+        
         console.log("Creating UNIQUE INDEX on TABLE `street_name` for COLUMN `name`...");
         await db.query('DEFINE INDEX streetNameIndex ON TABLE street_name COLUMNS name UNIQUE');
 
@@ -25,49 +21,41 @@ async function main() {
         console.log("Inserted", postalResult.length, "rows into table postal_code");
 
         console.log("Inserting data into table street_name...")
-        const streetNameResult = await db.query(streetNameQuery);
+        const streetNameResult = await db.query(streetQuery);
         console.log("Inserted", streetNameResult.length, "rows into table street_name");
     } catch (e) {
         console.error(e);
     }
 }
 
-function preparePostalCodes(sql) {
-    const data = sql
-    .toString()
-    .split('INSERT INTO `postal_code` (`cPostalCode`, `cTownName`) VALUES')[1]
-    .split('COMMIT;')[0]
-    .split('\n')
-    .map((line) => line
-        .split(',')
-        .map((part) => part.replace(/'/g, '').replace(/[()]/g, '').trim())
-        .filter((part) => part !== '')
-    ).filter((line) => line.length > 0);
-    
-    data.forEach((line) => {
-        while (line.length > 2) {
-            line[1] += `, ${line.pop()}`;
+function prepareStreetNames(json) {
+
+    let streetQuery = '';
+    let zipCodes = [];
+    for (const street of json) {
+        const zips = [];
+        for (const zip of street.zips) {
+            if (!zipCodes.find(z => z.code === parseInt(zip.code))) {
+                zips.push({ code: parseInt(zip.code), name: zip.name });
+            }
         }
-    });
-
-    const surrealql = data
-        .map((line) => `CREATE postal_code SET zip = "${line[0]}", city = "${line[1]}";`)
-        .join('\n');
-
-    return surrealql;
-}
-
-function prepareStreetNames(text) {
-    const data = text
-        .toString()
-        .split('\n')
-        .filter((line) => line.length > 0);
-
-    const surrealql = data
-        .map((line) => `CREATE street_name SET name = "${line}";`)
-        .join('\n');
-
+        streetQuery += `{ name: "${street.name}", postal_codes: [${street.zips.map(z => `postal_code:${z.code}`).join(", ")}] },\n`;
+        zipCodes = zipCodes.concat(zips);
+    }
+    streetQuery = `INSERT INTO street_name [
+        ${streetQuery}
+    ]`;
     
+    let postalQuery = '';
+    for (const zip of zipCodes) {
+        postalQuery += `{id: postal_code:${zip.code}, code: ${zip.code}, city: "${zip.name}" },\n`;
+    }
+    postalQuery = `INSERT INTO postal_code [
+        ${postalQuery}
+    ]`;
 
-    return surrealql;
+    return {
+        postalQuery,
+        streetQuery,
+    }
 }

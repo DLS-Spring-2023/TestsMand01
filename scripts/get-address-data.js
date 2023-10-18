@@ -8,14 +8,15 @@ async function main() {
     const response = await fetch('https://api.dataforsyningen.dk/vejnavne');
     const data = await response.json();
 
-    let txt = '';
-    for (const d of data) {
-        txt += d.navn + '\n';
+
+    let json = [];
+    for (const d of data.filter(d => d.postnumre.length > 0)) {
+        json.push({ name: d.navn, zips: d.postnumre.map(p => ({ code: p.nr, name: p.navn})) });
     }
-    console.log(txt);
+    // console.log(JSON.stringify(json, null, 2));
 
     // Commented out to prevent overwriting the file by accident
-    // fs.writeFileSync('src/data/street-names.txt', txt);
+    // fs.writeFileSync('src/data/street-names.json', JSON.stringify(json, null, 4));
 }
 
 // main();
