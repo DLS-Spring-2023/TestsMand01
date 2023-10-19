@@ -8,4 +8,4 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm", "run", "db:seed", "&&", "npm", "test"]
+RUN npm test

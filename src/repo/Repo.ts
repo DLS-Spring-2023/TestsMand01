@@ -1,7 +1,9 @@
 import { Surreal } from "surrealdb.node";
+import { Address } from "../models";
 
 type PostalCode = { code: number, city: string, id?: string };
-type AddressData = { name: string, postal_codes: PostalCode[] };
+export type AddressData = { name: string, postal_codes: PostalCode[] };
+
 class Repo {
     private db = new Surreal();
     public initialized = false;
