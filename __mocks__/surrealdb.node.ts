@@ -1,18 +1,22 @@
-import { readFileSync } from "fs";
-import { AddressData } from "../src/repo/Repo";
+import { readFileSync } from 'fs';
+import { AddressData } from '../src/repo/Repo';
 
 export class Surreal {
-    constructor() {}
+	constructor() {}
 
-    async connect(_: string, __?: any | undefined | null): Promise<void> {}
-    async use(_: any): Promise<void> {}
-    async query(query: string, __?: any | undefined | null): Promise<any> {
-        const n = parseInt(query.match(/LIMIT (\d+)/)?.[1] || '1');
-        const file = readFileSync('src/data/street-names.json', 'utf-8');
-        const data = JSON.parse(file);
-        data.forEach((d: any) => d.postal_codes = d.zips) as AddressData[];
-        data.forEach((d: any) => delete d.zips) as AddressData[];
-        data.sort(() => Math.random() - 0.5);
-        return data.slice(0, n);
-    }
+	async connect(): Promise<void> {}
+	async use(): Promise<void> {}
+	async query(query: string): Promise<AddressData[]> {
+		const n = parseInt(query.match(/LIMIT (\d+)/)?.[1] || '1');
+		const file = readFileSync('src/data/street-names.json', 'utf-8');
+		const data = JSON.parse(file);
+		data.forEach(
+			(d: { postal_codes: string[]; zips: string[] }) => (d.postal_codes = d.zips),
+		) as AddressData[];
+		data.forEach(
+			(d: { postal_codes: string[]; zips?: string[] }) => delete d.zips,
+		) as AddressData[];
+		data.sort(() => Math.random() - 0.5);
+		return data.slice(0, n);
+	}
 }

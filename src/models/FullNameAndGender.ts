@@ -1,7 +1,7 @@
-import { Gender } from "../enums/Gender"
+import { Gender } from '../enums/Gender';
 
 export type FullNameAndGender = {
-    name: string,
-    surname: string,
-    gender: Gender | 'female' | 'male'
-}
+	name: string;
+	surname: string;
+	gender: Gender | 'female' | 'male';
+};
