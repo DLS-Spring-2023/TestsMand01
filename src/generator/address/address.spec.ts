@@ -1,19 +1,15 @@
-import { readFileSync } from "fs";
 import { Address } from "../../models";
-import Repo, { AddressData } from "../../repo/Repo";
 import { generateAddress } from "./address";
 
-let addresses: Address[];
+let addresses: Address[] = [];
 
 describe('generate random address', () => {
 
     beforeAll(async () => {
         // Generate 10000 addresses
-        // In production the limit should probably be 100 or so.
-        addresses = await generateAddress(10000, () => mockedData(10000));
-    }); // 15 seconds timeout
-
-
+        // NOTE: The database sdk is mocked (see __mocks__/surrealdb.node.ts) 
+        addresses = await generateAddress(10000);
+    }, 10000); // 15 seconds timeout
 
     it('should generate a random street number', async () => {
         // Street number rules:
@@ -56,13 +52,3 @@ describe('generate random address', () => {
 
     });
 });
-
-async function mockedData(n: number): Promise<AddressData[]> {
-    const file = readFileSync('src/data/street-names.json', 'utf-8');
-    const data = JSON.parse(file);
-    data.forEach((d: any) => d.postal_codes = d.zips) as AddressData[];
-    data.forEach((d: any) => delete d.zips) as AddressData[];
-    data.sort(() => Math.random() - 0.5);
-    
-    return data.slice(0, n);
-}

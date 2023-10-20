@@ -1,16 +1,10 @@
 import { Address } from "../../models";
-import Repo, { AddressData } from "../../repo/Repo";
+import Repo from "../../repo/Repo";
 
-export async function generateAddress(
-    n: number = 1, 
-    dataProvider?: (n: number) => Promise<AddressData[]>
-): Promise<Address[]> {
-    
+export async function generateAddress(n: number = 1, ): Promise<Address[]> {
     if (n < 1) n = 1;
     
-    const addressData = dataProvider
-        ? await dataProvider(n) 
-        : await Repo.getRandomAddressData(n);
+    const addressData = await Repo.getRandomAddressData(n);
     
     return addressData.map(a => {
         const postalData = a.postal_codes[Math.floor(Math.random() * a.postal_codes.length)];
