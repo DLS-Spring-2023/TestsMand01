@@ -12,8 +12,9 @@
     "db:start": "docker run -d --rm --name generator_db -p 6000:8000 surrealdb/surrealdb:latest start",
     "db:stop": "docker stop generator_db",
     "db:seed": "node -r dotenv/config ./scripts/seed-db.js",
-    "format": "prettier --write",
-    "lint": "eslint . --ext .ts --ext .js"
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .ts --ext .js",
+    "prepare": "husky install"
   },
   "author": "JazzyMcJazz",
   "license": "MIT",
@@ -26,6 +27,7 @@
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.3",
     "prettier": "3.0.3",
     "ts-jest": "^29.1.1",
     "tsc-watch": "^5.0.3",

@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "\nRunning pre-commit hook\n"
+
+echo "Running linter..."
+if ! npm run lint > /dev/null 2>&1;
+then
+  echo "Linting failed. Aborting commit."
+  echo "Please fix linting errors and format files and try again."
+  echo "You can use 'npm run format' to format files according to prettier rules."
+  echo "You can use 'npm run lint' to see linting errors."
+  exit 1
+fi
+echo "Linting passed.\n"
+
+echo "Running tests..."
+if ! npm test > /dev/null 2>&1;
+then
+    echo "Testing failed. Aborting commit."
+    echo "Please fix failing tests and try again."
+    exit 1
+fi
+echo "All tests passed.\n"
