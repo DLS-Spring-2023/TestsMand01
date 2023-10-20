@@ -2,8 +2,6 @@ import { readFileSync } from 'fs';
 import { AddressData } from '../src/repo/Repo';
 
 export class Surreal {
-	constructor() {}
-
 	async connect(): Promise<void> {}
 	async use(): Promise<void> {}
 	async query(query: string): Promise<AddressData[]> {
