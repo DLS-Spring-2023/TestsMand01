@@ -1,0 +1,7 @@
+# Ignore artifacts:
+dist
+node_modules
+README.md
+src/data/*
+package.json
+package-lock.json
