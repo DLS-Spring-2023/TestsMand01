@@ -7,7 +7,7 @@ import { Gender } from "../../enums/Gender"
 const json = readFileSync('./src/data/person-names.json', 'utf8');
 const { persons } = JSON.parse(json);
 
-export const generateFullNameAndGender =(): FullNameAndGender => {
+export const generateFullNameAndGender = (): FullNameAndGender => {
 
   const mindIndex = 0;
   const maxIndex = persons.length - 1;
