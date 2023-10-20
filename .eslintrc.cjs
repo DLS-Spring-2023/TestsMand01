@@ -14,7 +14,7 @@ module.exports = {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
 	},
-	ignorePatterns: ['dist/', 'scripts/'],
+	ignorePatterns: ['dist/', 'scripts/', 'Jenkinsfile', 'sonar-project.properties'],
 	plugins: ['@typescript-eslint', 'prettier'],
 	rules: {
 		'prettier/prettier': 'error',
