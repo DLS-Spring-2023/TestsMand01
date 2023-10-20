@@ -1,1 +1,4 @@
 /dist
+/.husky
+/node_modules
+/scipts
