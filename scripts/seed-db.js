@@ -25,6 +25,7 @@ async function main() {
 		console.log('Inserted', streetNameResult.length, 'rows into table street_name');
 	} catch (e) {
 		console.error(e);
+		throw e;
 	}
 }
 
