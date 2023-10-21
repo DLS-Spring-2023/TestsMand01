@@ -35,3 +35,15 @@ npm test
 ```
 
 ***
+
+### Run generator
+
+To run the generator use thw following command:
+```
+npm run start -- [method]
+```
+
+So for example if you would like to get `fakeAddress` you would run the following command: 
+```
+npm run start -- fakeAddress
+```

@@ -1,4 +1,4 @@
-import { generatePhoneNumber } from '../generator/phoneNumber/phoneNumber';
+import { generateAddress, generatePhoneNumber } from '../generator';
 import { Address, FullNameAndGender, Person } from '../models';
 
 export interface IApi {
@@ -7,7 +7,7 @@ export interface IApi {
 	fakeFullNameGenderAndDateOfBirth: () => FullNameAndGender & { dob: number };
 	fakeCprFullNameAndGender: () => FullNameAndGender & { cpr: string };
 	fakeCprFullNameGenderAndDateOfBirth: () => FullNameAndGender & { cpr: string; dob: number };
-	fakeAddress: () => Address;
+	fakeAddress: () => Promise<Address[]>;
 	fakeMobilePhoneNumber: () => string;
 	fakePerson: () => Person;
 }
@@ -28,9 +28,8 @@ export class Api implements IApi {
 	fakeCprFullNameGenderAndDateOfBirth(): FullNameAndGender & { cpr: string; dob: number } {
 		return {} as FullNameAndGender & { cpr: string; dob: number };
 	}
-	fakeAddress(): Address {
-		//TODO: do this
-		return {} as Address;
+	async fakeAddress(): Promise<Address[]> {
+		return await generateAddress();
 	}
 	fakeMobilePhoneNumber(): string {
 		return generatePhoneNumber().toString();

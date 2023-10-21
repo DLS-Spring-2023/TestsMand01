@@ -9,7 +9,13 @@ const generationMethod = process.argv[2];
 
 switch (generationMethod) {
 	case GeneratorMethod.FAKE_MOBILE_PHONE_NUMBER: {
-		console.log(api.fakeMobilePhoneNumber());
+		const fakeMobilePhoneNumber = api.fakeMobilePhoneNumber();
+		console.log(fakeMobilePhoneNumber);
+		break;
+	}
+	case GeneratorMethod.FAKE_ADDRESS: {
+		const fakeAddress = await api.fakeAddress();
+		console.log(fakeAddress);
 		break;
 	}
 	default: {
