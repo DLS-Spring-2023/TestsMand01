@@ -37,21 +37,6 @@ class Repo {
 
 		return result;
 	}
-
-	public async findPostalCodes(): Promise<PostalCode[]> {
-		while (!this.initialized) {
-			await new Promise((resolve) => setTimeout(resolve, 100));
-		}
-		return (await this.db.query('SELECT * FROM postal_code')) as PostalCode[];
-	}
-
-	public async findStreetNames(): Promise<string[]> {
-		while (!this.initialized) {
-			await new Promise((resolve) => setTimeout(resolve, 100));
-		}
-		const result = (await this.db.query('SELECT * FROM street_name')) as AddressData[];
-		return result.map((r) => r.name);
-	}
 }
 
 export default new Repo();
