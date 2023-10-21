@@ -1,3 +1,4 @@
+import { generatePhoneNumber } from '../generator/phoneNumber/phoneNumber';
 import { Address, FullNameAndGender, Person } from '../models';
 
 export interface IApi {
@@ -11,9 +12,7 @@ export interface IApi {
 	fakePerson: () => Person;
 }
 
-// TODO: remove lint exception
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class Api implements IApi {
+export class Api implements IApi {
 	fakeCpr(): string {
 		return 'not implemented';
 	}
@@ -30,10 +29,11 @@ class Api implements IApi {
 		return {} as FullNameAndGender & { cpr: string; dob: number };
 	}
 	fakeAddress(): Address {
+		//TODO: do this
 		return {} as Address;
 	}
 	fakeMobilePhoneNumber(): string {
-		return 'not implemented';
+		return generatePhoneNumber().toString();
 	}
 	fakePerson(): Person {
 		return {} as Person;
