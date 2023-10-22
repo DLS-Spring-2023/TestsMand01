@@ -12,5 +12,5 @@
 		"allowSyntheticDefaultImports": true
 	},
 	"include": ["src/**/*"],
-	"exclude": ["**/*.spec.ts", "__mocks__"]
+
 }
