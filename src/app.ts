@@ -30,6 +30,12 @@ switch (generationMethod) {
 			console.log(`Quantity "${quantity}" is not a number.`);
 			process.exit(1);
 		}
+
+		if (n < 2 || n > 100) {
+			console.log(`Invalid quantity! Must be a number between 2 and 100.`);
+			process.exit(1);
+		}
+
 		const now = performance.now();
 		const people = await fakePeople(n);
 		for (const person of people) {
@@ -38,6 +44,8 @@ switch (generationMethod) {
 		const time = performance.now() - now;
 
 		console.log('\nGenerated', n, 'fake people in', Math.floor(time / 10) / 100, 'seconds.');
+		console.log(n);
+
 		break;
 	}
 	default: {
