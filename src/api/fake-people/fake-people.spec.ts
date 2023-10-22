@@ -2,7 +2,7 @@ import { fakePeople } from './fake-people';
 
 describe('fakePeople', () => {
 	it('should generate a new person with no missing properties', async () => {
-		const people = await fakePeople();
+		const people = await fakePeople(-1);
 		const person = people[0];
 
 		expect(people.length).toBe(1);

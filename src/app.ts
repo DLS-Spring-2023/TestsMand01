@@ -25,8 +25,8 @@ switch (generationMethod) {
 		break;
 	}
 	case GeneratorMethod.FAKE_PEOPLE: {
-		let n = 1;
-		if (isNaN((n = parseInt(quantity)))) {
+		const n = parseInt(quantity);
+		if (isNaN(n)) {
 			console.log(`Quantity "${quantity}" is not a number.`);
 			process.exit(1);
 		}
