@@ -12,7 +12,7 @@ class Repo {
 	}
 
 	private async connect() {
-		await this.db.connect(process.env.DB_URL || 'this will fail').catch(console.error);
+		await this.db.connect(process.env.DB_URL ?? 'this will fail').catch(console.error);
 		await this.db.use({ ns: 'generator', db: 'generator' }).catch(console.error);
 		this.initialized = true;
 	}

@@ -47,14 +47,18 @@ function generateDoor(): string {
 	const hasNum = Math.random() > 0.5;
 	const num = hasNum ? '-' + (Math.floor(Math.random() * 999) + 1) : '';
 
+	let door = '';
+
 	switch (type) {
 		case 1:
-			return doors[Math.floor(Math.random() * doors.length)];
+			door = doors[Math.floor(Math.random() * doors.length)];
+			break;
 		case 2:
-			return (Math.floor(Math.random() * 50) + 1).toString();
+			door = (Math.floor(Math.random() * 50) + 1).toString();
+			break;
 		case 3:
-			return letter + num;
-		default:
-			throw new Error('Invalid door type');
+			door = letter + num;
+			break;
 	}
+	return door;
 }
