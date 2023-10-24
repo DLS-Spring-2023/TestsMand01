@@ -19,13 +19,19 @@ describe('fakePeople', () => {
 	});
 
 	it.each([
+		// invalid lower bound
+		['-1'],
 		['0'],
-		['1'], // invalid lower bound
+		['1'],
+		// invalid upper bound
 		['101'],
-		['102'], // invalid upper bound
-	])('should exit with 1', async (n) => {
+		['102'],
+		['103'],
+		// other invalid values
+		['asdf'],
+	])('should exit with 1', async (n: unknown) => {
 		const mockExit = jest.spyOn(process, 'exit').mockImplementation();
-		await fakePeople(n);
+		await fakePeople(n as string);
 		expect(mockExit).toHaveBeenCalledWith(1);
 		mockExit.mockRestore();
 	});
@@ -43,6 +49,9 @@ describe('fakePeople', () => {
 		['98', 98],
 		['99', 99],
 		['100', 100],
+		// other valid values
+		['2abc', 2], // valid because parseInt('2abc') === 2 in JavaScript
+		['100.9', 100], // valid because parseInt('100.9') === 100 in JavaScript
 	])('should generate % unique people', async (n, expected) => {
 		const people = await fakePeople(n);
 		const uniquePeople = new Set(people.map((p) => JSON.stringify(p)));
