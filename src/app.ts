@@ -1,7 +1,6 @@
 import { Api } from './api/Api';
-import { fakePeople } from './api/fake-people/fake-people';
+import { fakePeople, fakePerson } from './api/fake-people/fake-people';
 import { GeneratorMethod } from './enums/GeneratorMethod';
-import { logPerson } from './models/Person';
 
 const api = new Api();
 
@@ -20,32 +19,11 @@ switch (generationMethod) {
 		break;
 	}
 	case GeneratorMethod.FAKE_PERSON: {
-		const person = await fakePeople(1);
-		logPerson(person[0]);
+		fakePerson();
 		break;
 	}
 	case GeneratorMethod.FAKE_PEOPLE: {
-		const n = parseInt(quantity);
-		if (isNaN(n)) {
-			console.log(`Quantity "${quantity}" is not a number.`);
-			process.exit(1);
-		}
-
-		if (n < 2 || n > 100) {
-			console.log(`Invalid quantity! Must be a number between 2 and 100.`);
-			process.exit(1);
-		}
-
-		const now = performance.now();
-		const people = await fakePeople(n);
-		for (const person of people) {
-			logPerson(person);
-		}
-		const time = performance.now() - now;
-
-		console.log('\nGenerated', n, 'fake people in', Math.floor(time / 10) / 100, 'seconds.');
-		console.log(n);
-
+		fakePeople(quantity);
 		break;
 	}
 	default: {

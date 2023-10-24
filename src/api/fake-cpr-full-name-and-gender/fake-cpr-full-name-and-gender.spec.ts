@@ -10,12 +10,10 @@ describe('fakeCprFullNameAndGender', () => {
 		expect(result).toHaveProperty('surname');
 		expect(result).toHaveProperty('gender');
 		expect(result).toHaveProperty('cpr');
-		
-		expect(genders).toContain(result.gender)
+
+		expect(genders).toContain(result.gender);
 		expect(result.name).not.toBeNull();
 		expect(result.surname).not.toBeNull();
-		expect(result.cpr.length).toBe(10)
-
-		
+		expect(result.cpr.length).toBe(10);
 	});
 });

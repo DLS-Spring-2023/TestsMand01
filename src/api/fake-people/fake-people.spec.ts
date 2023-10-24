@@ -1,11 +1,9 @@
-import { fakePeople } from './fake-people';
+import { fakePeople, fakePerson } from './fake-people';
 
 describe('fakePeople', () => {
 	it('should generate a new person with no missing properties', async () => {
-		const people = await fakePeople(-1);
-		const person = people[0];
+		const person = await fakePerson();
 
-		expect(people.length).toBe(1);
 		expect(person.cpr).toBeDefined();
 		expect(person.fullName).toBeDefined();
 		expect(person.dob).toBeDefined();
@@ -20,18 +18,34 @@ describe('fakePeople', () => {
 		expect(person.address.city).toBeDefined();
 	});
 
-	it('should generate 100,000 people in less than 5 seconds', async () => {
-		const start = performance.now();
-		await fakePeople(100000);
-		const end = performance.now();
-		const time = end - start;
-
-		expect(time).toBeLessThan(10000);
+	it.each([
+		['0'],
+		['1'], // invalid lower bound
+		['101'],
+		['102'], // invalid upper bound
+	])('should exit with 1', async (n) => {
+		const mockExit = jest.spyOn(process, 'exit').mockImplementation();
+		await fakePeople(n);
+		expect(mockExit).toHaveBeenCalledWith(1);
+		mockExit.mockRestore();
 	});
 
-	it('should generate 100,000 unique people', async () => {
-		const people = await fakePeople(100000);
+	it.each([
+		// valid lower bound
+		['2', 2],
+		['3', 3],
+		['4', 4],
+		// valid middle
+		['49', 49],
+		['50', 50],
+		['51', 51],
+		// valid upper bound
+		['98', 98],
+		['99', 99],
+		['100', 100],
+	])('should generate % unique people', async (n, expected) => {
+		const people = await fakePeople(n);
 		const uniquePeople = new Set(people.map((p) => JSON.stringify(p)));
-		expect(uniquePeople.size).toBe(100000);
+		expect(uniquePeople.size).toBe(expected);
 	});
 });
