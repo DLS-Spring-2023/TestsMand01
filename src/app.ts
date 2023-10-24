@@ -19,6 +19,16 @@ switch (generationMethod) {
 		console.log(fakeAddress);
 		break;
 	}
+	case GeneratorMethod.FAKE_FULL_NAME_AND_GENDER: {
+		const fakeFullNameAndGender = api.fakeFullNameAndGender();
+		console.log(fakeFullNameAndGender);
+		break;
+	}
+	case GeneratorMethod.FAKE_FULL_NAME_GENDER_AND_DATE_OF_BIRTH: {
+		const fakeFullNameGenderAndDateOfBirth = api.fakeFullNameGenderAndDateOfBirth();
+		console.log(fakeFullNameGenderAndDateOfBirth);
+		break;
+	}
 	case GeneratorMethod.FAKE_PERSON: {
 		const person = await fakePeople(1);
 		logPerson(person[0]);

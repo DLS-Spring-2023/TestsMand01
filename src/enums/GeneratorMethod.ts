@@ -3,4 +3,6 @@ export enum GeneratorMethod {
 	FAKE_ADDRESS = 'fakeAddress',
 	FAKE_PERSON = 'fakePerson',
 	FAKE_PEOPLE = 'fakePeople',
+	FAKE_FULL_NAME_AND_GENDER = 'fakeFullNameAndGender',
+	FAKE_FULL_NAME_GENDER_AND_DATE_OF_BIRTH = 'fakeFullNameGenderAndDateOfBirth',
 }
