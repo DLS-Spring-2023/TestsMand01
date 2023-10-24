@@ -11,7 +11,7 @@ export type Person = {
 };
 
 export function logPerson(person: Person) {
-	console.log();
+	console.log('');
 	console.log('CPR:      ', person.cpr);
 	console.log('Name:     ', person.fullName);
 	console.log('Gender    ', Gender[person.gender as number]);

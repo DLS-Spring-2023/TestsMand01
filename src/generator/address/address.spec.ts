@@ -5,9 +5,9 @@ let addresses: Address[] = [];
 
 describe('generate random address', () => {
 	beforeAll(async () => {
-		// Generate 10000 addresses
+		// Generate 50,000 addresses
 		// NOTE: The database sdk is mocked (see __mocks__/surrealdb.node.ts)
-		addresses = await generateAddress(10000);
+		addresses = await generateAddress(50000);
 	});
 
 	it('should generate a random street number', async () => {
@@ -39,9 +39,11 @@ describe('generate random address', () => {
 		}
 	});
 
-	it('should generate less than 1% duplicate street names', () => {
+	it('should generate less than zero duplicate street names in a set of 50,000', () => {
+		// There are around 53,000 street names in the dataset.
+		// Duplicates should not happen before that threshold.
 		const uniqueStreets = new Set(addresses.map((a) => JSON.stringify(a.street)));
-		expect(uniqueStreets.size).toBeGreaterThan(9900);
+		expect(uniqueStreets.size).toBe(50000);
 	});
 
 	it('should generate 0% duplicate addresses', () => {
@@ -51,6 +53,7 @@ describe('generate random address', () => {
 		expect(uniqueCities.size).toBe(addresses.length);
 	});
 
+	// White box test (to increase statement coverage)
 	it('should generate 1 address with a negative argument', async () => {
 		const address = await generateAddress(-1);
 		expect(address.length).toBe(1);
