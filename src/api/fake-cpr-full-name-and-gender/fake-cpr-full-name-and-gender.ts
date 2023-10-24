@@ -6,7 +6,7 @@ export const fakeCprFullNameAndGender = (): FullNameAndGender & { cpr: string } 
 	const fakeFullNameAndGender = generateFullNameAndGender();
 	const dob = generateDob();
 	const gender = fakeFullNameAndGender.gender === Gender.Male ? Gender.Male : Gender.Female;
-	const cpr = generateCpr(dob, gender)
+	const cpr = generateCpr(dob, gender);
 
 	return {
 		...fakeFullNameAndGender,

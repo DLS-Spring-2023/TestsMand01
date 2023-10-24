@@ -1,4 +1,4 @@
-import { fakeCprFullNameAndGender } from "./fake-cpr-full-name-and-gender";
+import { fakeCprFullNameAndGender } from './fake-cpr-full-name-and-gender';
 
 describe('fakeCprFullNameAndGender', () => {
 	it('should return the  cpr, full name and gender', () => {
