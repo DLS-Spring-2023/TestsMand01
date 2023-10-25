@@ -28,6 +28,16 @@ switch (generationMethod) {
 		console.log(fakeFullNameGenderAndDateOfBirth);
 		break;
 	}
+	case GeneratorMethod.FAKE_CPR_FULL_NAME_AND_GENDER: {
+		const fakeCprFullNameAndGender = api.fakeCprFullNameAndGender();
+		console.log(fakeCprFullNameAndGender);
+		break;
+	}
+	case GeneratorMethod.FAKE_CPR_FULL_NAME_GENDER_AND_DATE_OF_BIRTH: {
+		const fakeCprFullNameGenderAndDateOfBirth = api.fakeCprFullNameGenderAndDateOfBirth();
+		console.log(fakeCprFullNameGenderAndDateOfBirth);
+		break;
+	}
 	case GeneratorMethod.FAKE_PERSON: {
 		fakePerson();
 		break;

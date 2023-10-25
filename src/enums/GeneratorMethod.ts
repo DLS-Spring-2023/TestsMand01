@@ -5,4 +5,6 @@ export enum GeneratorMethod {
 	FAKE_PEOPLE = 'fakePeople',
 	FAKE_FULL_NAME_AND_GENDER = 'fakeFullNameAndGender',
 	FAKE_FULL_NAME_GENDER_AND_DATE_OF_BIRTH = 'fakeFullNameGenderAndDateOfBirth',
+	FAKE_CPR_FULL_NAME_AND_GENDER = 'fakeCprFullNameAndGender',
+	FAKE_CPR_FULL_NAME_GENDER_AND_DATE_OF_BIRTH = 'fakeCprFullNameGenderAndDateOfBirth',
 }
