@@ -46,6 +46,11 @@ switch (generationMethod) {
 		fakePeople(quantity);
 		break;
 	}
+	case GeneratorMethod.FAKE_CPR: {
+		const fakeCpr = api.fakeCpr();
+		console.log(fakeCpr);
+		break;
+	}
 	default: {
 		console.log(`Specified generation "${generationMethod}" method does not exist.`);
 		console.log('Available generation methods are:');
