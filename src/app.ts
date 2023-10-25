@@ -18,6 +18,11 @@ switch (generationMethod) {
 		console.log(fakeAddress);
 		break;
 	}
+	case GeneratorMethod.FAKE_CPR: {
+		const fakeCpr = api.fakeCpr();
+		console.log(fakeCpr);
+		break;
+	}
 	case GeneratorMethod.FAKE_FULL_NAME_AND_GENDER: {
 		const fakeFullNameAndGender = api.fakeFullNameAndGender();
 		console.log(fakeFullNameAndGender);
@@ -44,11 +49,6 @@ switch (generationMethod) {
 	}
 	case GeneratorMethod.FAKE_PEOPLE: {
 		fakePeople(quantity);
-		break;
-	}
-	case GeneratorMethod.FAKE_CPR: {
-		const fakeCpr = api.fakeCpr();
-		console.log(fakeCpr);
 		break;
 	}
 	default: {
