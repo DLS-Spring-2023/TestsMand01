@@ -53,6 +53,12 @@ describe('generate random address', () => {
 		expect(uniqueCities.size).toBe(addresses.length);
 	});
 
+	// White box test (to increase statement coverage)
+	it('should generate 1 address with a negative argument', async () => {
+		const address = await generateAddress(-1);
+		expect(address.length).toBe(1);
+	});
+
 	it('should generate over 60000 addresses that are unique', async () => {
 		const address = await generateAddress(60000);
 		const uniqueCities = new Set(address.map((a) => JSON.stringify(a)));

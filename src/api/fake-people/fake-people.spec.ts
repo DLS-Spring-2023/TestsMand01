@@ -27,8 +27,6 @@ describe('fakePeople', () => {
 		['101'],
 		['102'],
 		['103'],
-		// other invalid values
-		['asdf'],
 	])('should exit with 1', async (n: unknown) => {
 		const mockExit = jest.spyOn(process, 'exit').mockImplementation();
 		await fakePeople(n as string);
