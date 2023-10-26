@@ -20,6 +20,7 @@ describe('fakePeople', () => {
 
 	it.each([
 		// invalid lower bound
+		['-1'],
 		['0'],
 		['1'],
 		// invalid upper bound
